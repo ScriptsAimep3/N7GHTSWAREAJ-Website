@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>N7GHTSWARE AJ — Autojoiner</title>
+  <meta name="description" content="N7GHTSWARE AJ — AJ" />
+
+  <style>
+    :root{
+      --bg:#07070a;
+      --panel:#0f1720;
+      --muted:#9aa6b2;
+      --blue-500:#0ea5ff;
+      --blue-700:#0369a1;
+      --glass: rgba(255,255,255,0.03);
+      --accent-glow: 0 6px 30px rgba(14,165,255,0.08);
+      --radius: 14px;
+      --max-width:1100px;
+      --ff: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--ff);
+      background:
+        radial-gradient(800px 400px at 10% 10%, rgba(14,165,255,0.035), transparent 10%),
+        radial-gradient(600px 300px at 90% 90%, rgba(3,105,161,0.03), transparent 10%),
+        var(--bg);
+      color:#e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:40px 20px;
+    }
+
+    .container{
+      width:100%;
+      max-width:var(--max-width);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:20px;
+      padding:28px;
+      box-shadow: 0 10px 40px rgba(2,6,23,0.7);
+      border: 1px solid rgba(255,255,255,0.03);
+      overflow:hidden;
+      position:relative;
+    }
+
+    .header{
+      display:flex;
+      gap:20px;
+      align-items:center;
+      margin-bottom:18px;
+    }
+
+    .logo{
+      min-width:84px;
+      min-height:84px;
+      border-radius:16px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg, rgba(14,165,255,0.12), rgba(3,105,161,0.06));
+      box-shadow: var(--accent-glow);
+      border:1px solid rgba(255,255,255,0.03);
+      font-weight:800;
+      font-size:20px;
+      letter-spacing:1px;
+      color:var(--blue-500);
+    }
+
+    .title{
+      flex:1;
+    }
+
+    .title h1{
+      margin:0;
+      font-size:28px;
+      letter-spacing:1px;
+      line-height:1;
+      color: #f8fbff;
+      text-shadow: 0 2px 18px rgba(14,165,255,0.06);
+    }
+
+    .title p{
+      margin:6px 0 0 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    /* Main grid */
+    .main{
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap:20px;
+      align-items:start;
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+      border-radius: var(--radius);
+      padding:18px;
+      border:1px solid rgba(255,255,255,0.03);
+      box-shadow: 0 8px 30px rgba(2,6,23,0.6);
+    }
+
+    .hero{
+      padding:28px;
+      border-radius:12px;
+      background: linear-gradient(90deg, rgba(3,105,161,0.03), rgba(14,165,255,0.02));
+      display:flex;
+      gap:20px;
+      align-items:center;
+      margin-bottom:18px;
+    }
+
+    .hero .big{
+      font-size:38px;
+      font-weight:900;
+      color:#eaf6ff;
+      letter-spacing:2px;
+      margin:0;
+    }
+
+    .hero .tag{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .desc{
+      font-size:15px;
+      color:#cfdff3;
+      line-height:1.45;
+      margin-bottom:14px;
+    }
+
+    .buttons-row{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:10px;
+      background:linear-gradient(180deg, rgba(14,165,255,0.08), rgba(3,105,161,0.06));
+      border:1px solid rgba(14,165,255,0.18);
+      color:#eaf6ff;
+      font-weight:600;
+      cursor:pointer;
+      text-decoration:none;
+      transition:transform .12s ease, box-shadow .12s ease, opacity .12s;
+      box-shadow: 0 6px 20px rgba(3,105,161,0.06);
+      white-space:nowrap;
+    }
+    .btn:active{transform:translateY(1px)}
+    .btn.ghost{
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.04);
+      color:var(--muted);
+      box-shadow:none;
+    }
+    .btn.buy{
+      background: linear-gradient(90deg, #06b6d4, #0ea5ff);
+      border: none;
+      box-shadow: 0 8px 26px rgba(14,165,255,0.10);
+      color:#031428;
+    }
+    .btn.discord{
+      background: linear-gradient(90deg, #5865f2, #3944f7);
+      border: none;
+      box-shadow: 0 8px 26px rgba(57,68,247,0.12);
+    }
+
+    /* Right column */
+    .side h3{
+      margin:0 0 10px 0;
+      color:#eaf6ff;
+      font-size:16px;
+    }
+
+    .video-thumb{
+      position:relative;
+      background:linear-gradient(180deg, rgba(0,0,0,0.4), rgba(0,0,0,0.6));
+      height:190px;
+      border-radius:10px;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,0.03);
+    }
+
+    .video-thumb::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(120deg, rgba(14,165,255,0.03), transparent 30%);
+      mix-blend-mode:overlay;
+    }
+
+    /* inline thumbnail video style */
+    .inline-thumb{
+      width:100%;
+      height:190px;
+      border-radius:10px;
+      object-fit:cover;
+      background:#000;
+      border:1px solid rgba(255,255,255,0.03);
+      display:block;
+    }
+
+    .muted{
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    /* modal */
+    .modal-backdrop{
+      position:fixed;
+      inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      background: rgba(2,6,23,0.6);
+      z-index:1200;
+      padding:20px;
+    }
+    .modal-backdrop.active{display:flex}
+    .modal{
+      width:100%;
+      max-width:980px;
+      background: #071428;
+      border-radius:12px;
+      padding:12px;
+      border:1px solid rgba(255,255,255,0.04);
+      box-shadow: 0 18px 80px rgba(2,6,23,0.85);
+    }
+    .modal video{
+      width:100%;
+      height:560px;
+      border-radius:8px;
+      background:#000;
+    }
+    .modal .close{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      background:transparent;
+      border:0;
+      color:var(--muted);
+      font-weight:700;
+      cursor:pointer;
+      padding:8px 10px;
+    }
+
+    /* footer note */
+    .foot{
+      margin-top:18px;
+      color:var(--muted);
+      font-size:13px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+    }
+
+    @media (max-width:980px){
+      .main{grid-template-columns:1fr}
+      .modal video{height:380px}
+      .inline-thumb{height:150px}
+    }
+
+    @media (max-width:520px){
+      .hero .big{font-size:28px}
+      .logo{min-width:64px;min-height:64px;font-size:16px}
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="main" aria-labelledby="main-title">
+    <header class="header">
+      <div class="logo" aria-hidden="true">N7</div>
+      <div class="title">
+        <h1 id="main-title">N7GHTSWARE AJ</h1>
+        <p class="muted">El Autojoiner mas rapido .</p>
+      </div>
+      <nav aria-label="acciones rapidas">
+        <a class="btn buy" id="purchaseBtn" href="#" target="_blank" rel="noopener">Comprar</a>
+      </nav>
+    </header>
+
+    <section class="main">
+      <!-- LEFT: Info -->
+      <div>
+        <article class="card hero" aria-hidden="false">
+          <div style="flex:1">
+            <p class="big">N7GHTSWARE AJ [BETA]</p>
+            <p class="tag">Autojoiner para <strong>Steal a Brainrot</strong>.</p>
+          </div>
+          <div style="text-align:right; min-width:110px;">
+            <div class="muted">v3.5 • Beta</div>
+            <div style="height:6px"></div>
+            <div style="font-size:12px;color:var(--muted)">wsp</div>
+          </div>
+        </article>
+
+        <div class="card" style="margin-top:14px">
+          <p class="desc">
+            <strong>N7GHTSWARE AJ</strong> es el autojoiner más rápido y optimizado para <strong>Steal a Brainrot</strong> .
+
+            Diseñado para entrar instantáneamente a servidores con alto valor, máxima estabilidad y rendimiento superior.
+          </p>
+
+          <div class="buttons-row" style="margin-top:8px;">
+            <button class="btn" id="openVideo1" data-video="VIDEO_1_URL">
+              ▶ Global AJ 
+            </button>
+
+            <button class="btn" id="openVideo2" data-video="VIDEO_2_URL">
+              ▶ PC AJ
+            </button>
+          </div>
+
+          <div class="foot" style="margin-top:16px">
+            <span class="muted">Cheap and Easy</span>
+            <span class="muted">made by ! ender_. and dxvz_n7ght</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Videos / Side -->
+      <aside class="side">
+        <div class="card">
+          <h3>Videos de demostración</h3>
+
+          <!-- === Aquí están las miniaturas tipo "Opción 2" (autoplay muted loop) === -->
+          <div style="display:grid;gap:12px;margin-top:10px">
+            <!-- Puedes reemplazar los src por rutas locales (ej: "videos/demo1.mp4") o URLs absolutas -->
+            <video class="inline-thumb"
+                   src="https://cdn.discordapp.com/attachments/1471279032095215845/1476027247847538698/2026-02-19_15-44-34.mp4?ex=699fa0ff&is=699e4f7f&hm=e090513b64d2ba9becd4fb1f1da148ea2b74580aa737835f0ddf5ee7e8358231&"
+                   muted
+                   loop
+                   autoplay
+                   playsinline
+                   preload="metadata"
+                   aria-label="Miniatura Demo 1 (.mp4)">
+              Your browser does not support the video tag.
+            </video>
+
+            <video class="inline-thumb"
+                   src="https://cdn.discordapp.com/attachments/1471279032095215845/1472438903888805988/2026-02-14_20-45-01.mp4?ex=699f1957&is=699dc7d7&hm=7c4238cc5a189d24f3f85f27fe9976b988847b69bb550282fd3f8ccaac6d00ac&"
+                   muted
+                   loop
+                   autoplay
+                   playsinline
+                   preload="metadata"
+                   aria-label="Miniatura Demo 2 (.mp4)">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+
+          <hr style="margin:16px 0;border:0;border-top:1px solid rgba(255,255,255,0.03)">
+
+          <div>
+            <h3 style="margin-bottom:8px">Comunidad</h3>
+            <p class="muted" style="margin:0 0 10px 0">Únete al servidor de Discord para soporte y actualizaciones.</p>
+            <a class="btn discord" id="discordBtn2" href="#" target="_blank" rel="noopener">Ir a Discord</a>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </div>
+
+  <!-- modal -->
+  <div class="modal-backdrop" id="modal" aria-hidden="true" role="dialog" aria-modal="true">
+    <div class="modal" role="document">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+        <strong id="modal-title">Reproductor</strong>
+        <button class="close" id="closeModal">✕ Cerrar</button>
+      </div>
+      <!-- Reproductor de video para .mp4 -->
+      <video id="player" controls playsinline webkit-playsinline preload="metadata">
+        <source id="playerSource" src="" type="video/mp4">
+        Tu navegador no soporta el elemento de video.
+      </video>
+    </div>
+  </div>
+
+  <script>
+    // ===== CONFIG =====
+    // Sustituye estos strings por las URLs reales de tus .mp4 y links.
+    // Pueden ser rutas relativas (ej: "videos/demo1.mp4") o URLs absolutas (https://...)
+    const VIDEO_1_URL = "https://cdn.discordapp.com/attachments/1471279032095215845/1476027247847538698/2026-02-19_15-44-34.mp4?ex=699fa0ff&is=699e4f7f&hm=e090513b64d2ba9becd4fb1f1da148ea2b74580aa737835f0ddf5ee7e8358231&";
+    const VIDEO_2_URL = "https://cdn.discordapp.com/attachments/1471279032095215845/1472438903888805988/2026-02-14_20-45-01.mp4?ex=699f1957&is=699dc7d7&hm=7c4238cc5a189d24f3f85f27fe9976b988847b69bb550282fd3f8ccaac6d00ac&";
+    const PURCHASE_URL = "https://discord.gg/yB6mEJKnPF"; // <- reemplaza (botón "Comprar")
+    const DISCORD_INVITE_URL = "https://discord.gg/yB6mEJKnPF"; // <- reemplaza
+    // ==================
+
+    // Elementos
+    const modal = document.getElementById('modal');
+    const player = document.getElementById('player');
+    const playerSource = document.getElementById('playerSource');
+    const modalTitle = document.getElementById('modal-title');
+
+    function openModalWith(url, title){
+      if(!url){
+        alert("No hay URL configurada para este video. Reemplaza VIDEO_1_URL/VIDEO_2_URL en el script.");
+        return;
+      }
+      // Set source and play. Para evitar bloqueo de autoplay lo dejaremos silenciado inicialmente;
+      // el usuario puede desmutear manualmente.
+      playerSource.src = url;
+      player.load();
+      player.muted = true;
+      modalTitle.textContent = title;
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden','false');
+
+      // Intenta reproducir; si el navegador bloquea el autoplay, quedará en pausa listo para reproducir.
+      player.play().catch(()=>{/* autoplay bloqueado, usuario debe pulsar play */});
+    }
+
+    function closeModal(){
+      modal.classList.remove('active');
+      // pausar y limpiar fuente para liberar memoria
+      try { player.pause(); } catch(e){}
+      playerSource.src = "";
+      player.load();
+      modal.setAttribute('aria-hidden','true');
+    }
+
+    document.getElementById('openVideo1').addEventListener('click', () => {
+      openModalWith(VIDEO_1_URL, "Global Autojoiner");
+    });
+
+    document.getElementById('openVideo2').addEventListener('click', () => {
+      openModalWith(VIDEO_2_URL, "PC Autojoiner");
+    });
+
+    document.getElementById('closeModal').addEventListener('click', closeModal);
+    // cerrar modal al clickear fuera
+    modal.addEventListener('click', (e) => {
+      if(e.target === modal) closeModal();
+    });
+
+    // botones Compra / Discord
+    document.getElementById('purchaseBtn').href = PURCHASE_URL;
+    document.getElementById('discordBtn2').href = DISCORD_INVITE_URL;
+
+    // accesibilidad: cerrar modal con Escape
+    document.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape') closeModal();
+    });
+  </script>
+</body>
+</html>
